@@ -7,7 +7,7 @@ sudo yum install -y docker
 sudo service docker start  
 sudo usermod -a -G docker ec2-user  
   
-# log out and log in to pickup the added group   
+log out and log in to pickup the added group   
 
 # now execute  
 docker --help  
