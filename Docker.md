@@ -1,11 +1,7 @@
 ### Docker For Beginner #########  
 
 # Install docker on amazon linux  
-#!/bin/bash  
-#   
-# steps taken verbatim from:  
-#  http://docs.aws.amazon.com/AmazonECS/latest/developerguide/docker-basics.html#install_docker  
-#  
+#!/bin/bash    
 sudo yum update -y  
 sudo yum install -y docker  
 sudo service docker start  
