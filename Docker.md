@@ -12,11 +12,11 @@ log out and log in to pickup the added group
 # now execute  
 docker --help  
 
-# docker image --help  
+docker image --help  
 
-# docker run hello-world    
+docker run hello-world    
 
-# docker images  
+docker images  
 
 # just check below command to interactively login to conatiner  
 docker run -it alpine sh  
