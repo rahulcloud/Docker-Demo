@@ -159,3 +159,15 @@ docker container exec -it web1 bash
 
 ###################################  
 # Linking containers with Docker networks  
+
+###################################
+# tag docker image  
+docker tag <CONT-ID> drahulgandhi/docker-40:flaskapp1  
+  
+docker login  
+
+docker push <Docker-Username>/<Repo-Name>:CONTTag  
+
+
+docker cp ./webapp.war demo:/usr/local/tomcat/webapps  
+
