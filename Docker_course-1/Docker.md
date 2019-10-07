@@ -158,9 +158,7 @@ docker container run -it -p 5000:5000 -e FLASK_APP=app.py --rm --name web1 -e FL
 docker container exec -it web1 bash  
 
 ###################################  
-# Linking containers with Docker networks  
 
-###################################
 # tag docker image  
 docker tag <CONT-ID> drahulgandhi/docker-40:flaskapp1  
   
@@ -170,4 +168,19 @@ docker push `<Docker-Username>/<Repo-Name>`:CONTTag
 
 
 docker cp `./webapp.war demo:/usr/local/tomcat/webapps`  
+
+# Linking containers with Docker networks  
+
+###################################  
+# create a new image from Docker Course-2  
+
+docker image build -t web2 .
+
+Now we deal with two images to connect to a network pull down a redis image  
+docker pull redis:3.2-alpine  
+# Note in order to communicate between two systems first they should be in same network this is basic idea  
+Two types of networks:  
+internal:LAN  
+External:WAN  
+
 
