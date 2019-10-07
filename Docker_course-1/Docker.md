@@ -160,7 +160,7 @@ docker container exec -it web1 bash
 ###################################  
 
 # tag docker image  
-docker tag <CONT-ID> drahulgandhi/docker-40:flaskapp1  
+docker tag `<CONT-ID> drahulgandhi/docker-40:flaskapp1`  
   
 docker login  
 
@@ -182,8 +182,50 @@ docker pull redis:3.2-alpine
 ![Networking](https://github.com/rahulcloud/Docker-Demo/blob/master/images/network-1.PNG)  
 ![Networking](https://github.com/rahulcloud/Docker-Demo/blob/master/images/network-2.PNG)  
 ![Networking](https://github.com/rahulcloud/Docker-Demo/blob/master/images/network-3.PNG)  
-Two types of networks:  
-internal:LAN  
+
+# Two types of networks:  
+Internal:LAN   
 External:WAN  
+By default docker creates networks  
+docker network ls  
+deafult is bridge ntwork  
+ifconfig to check  
+--> docker0  
+docker network inspect bridge  
+Now Run the redis image that we had pulled  
+docker container run --rm -itd -p 6379:6379 --name redis redis:3.2-alpine  
+docker network inspect bridge  
+now run web2 image  
+docker container run --rm -td -p 5000:5000 -e FLASK_APP=app.py -e FLASK_DEBUG=1 --name=web2 -v $PWD:/app web2  
+check below for both containers `<for inetaddr>`  
+docker exec redis ifconfig  
+docker exec web2 ifconfig  
+# Now ping containers for N/W test  
+docker exec web2 ping IPADDRESS of Redis container  
+# you can even check below for better understanding  
+docker exec redis cat  /etc/hosts  
+docker container ls  
 
+#################################  
+# we can even create own Network  
+docker network create --driver bridge firstnetwork  
+docker network inspect firstnetwork  
 
+now lets add our containers to newly created network  
+docker container stop web2  
+docker container stop redis  
+
+docker container run --rm -itd -p 6379:6379 --name redis --net firstnetwork redis:3.2-alpine  
+docker container run --rm -td -p 5000:5000 -e FLASK_APP=app.py -e FLASK_DEBUG=1 --name=web2 -v $PWD:/app --net firstnetwork web2  
+docker network inspect firstnetwork  
+# test ping now  
+docker exec web2 ping redis  
+
+# it's time to access our conatiner apps  
+localhost:5000 `chnage to your docker image IPADDRESS`  
+
+now debug redis container with redis-cli which will interact with redsi server  
+docker exec -it redis redis-cli  
+>KEYS *  
+>INCRBY web2_counter 1000000  
+Now go back to your browser and hit refresh on your FLASK APP  
