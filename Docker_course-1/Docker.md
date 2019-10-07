@@ -178,7 +178,10 @@ docker image build -t web2 .
 
 Now we deal with two images to connect to a network pull down a redis image  
 docker pull redis:3.2-alpine  
-# Note in order to communicate between two systems first they should be in same network this is basic idea  
+# Note: `in order to communicate between two systems first they should be in same network this is basic idea`  
+![Networking](https://github.com/rahulcloud/Docker-Demo/blob/master/images/network-1.PNG)  
+![Networking](https://github.com/rahulcloud/Docker-Demo/blob/master/images/network-2.PNG)  
+![Networking](https://github.com/rahulcloud/Docker-Demo/blob/master/images/network-3.PNG)  
 Two types of networks:  
 internal:LAN  
 External:WAN  
