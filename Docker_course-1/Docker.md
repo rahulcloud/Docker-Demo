@@ -229,3 +229,7 @@ docker exec -it redis redis-cli
 >KEYS *  
 >INCRBY web2_counter 1000000  
 Now go back to your browser and hit refresh on your FLASK APP  
+
+# NOW stop both containers  
+docker container stop redis  
+docker container stop web2  
