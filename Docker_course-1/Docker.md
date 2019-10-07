@@ -166,8 +166,8 @@ docker tag <CONT-ID> drahulgandhi/docker-40:flaskapp1
   
 docker login  
 
-docker push <Docker-Username>/<Repo-Name>:CONTTag  
+docker push `<Docker-Username>/<Repo-Name>`:CONTTag  
 
 
-docker cp ./webapp.war demo:/usr/local/tomcat/webapps  
+docker cp `./webapp.war demo:/usr/local/tomcat/webapps`  
 
