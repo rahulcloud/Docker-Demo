@@ -1,13 +1,13 @@
 ### Docker For Beginner #########  
 
 # Install docker on amazon linux  
-#!/bin/bash    
+#!/bin/bash   
 sudo yum update -y  
 sudo yum install -y docker  
 sudo service docker start  
 sudo usermod -a -G docker ec2-user  
   
-log out and log in to pickup the added group   
+# log out and log in to pickup the added group   
 
 # now execute  
 docker --help  
@@ -18,7 +18,7 @@ docker run hello-world
 
 docker images  
 
-# just check below command to interactively login to conatiner  
+# just check below command to interactively login to container  
 docker run -it alpine sh  
 
 # to check the above list out the file system  
@@ -59,7 +59,7 @@ docker image rm web1:1.0
 docker image ls  
 
 
-## What is conatiner  
+## What is container  
 # How to make docker image as container  
 docker container ls  
       OR  
@@ -72,7 +72,7 @@ http://192.168.99.100:5000
 docker-machine ip  
 
 # open a new terminal and try below  
-docker conatiner ls (or) docker ps  
+docker container ls (or) docker ps  
 # go to first terminla press ctrl+c  
 docker container ls  
 docker container ls -a  
@@ -80,7 +80,7 @@ docker container rm <Name>
 
 ## how to pass more params to dlete container when it exits  
 docker container run -it --rm --name web1 -p 5000:5000 -e FLASK_APP=app.py web1  
-docker conatiner ls -a  
+docker container ls -a  
 ## Run container in the background  
 docker container run -it --rm --name web1 -p 5000:5000 -e FLASK_APP=app.py -d web1  
 docker container ls  
@@ -102,9 +102,9 @@ docker container run -it --rm --name web1 -p 5000:5000 -e FLASK_APP=app.py -d we
 
 # ports bind error to resolve  
 docker container run -it --rm --name web1_2 -p 5000 -e FLASK_APP=app.py -d web1  
-docker conatiner ls  
+docker container ls  
 
-# restart docker conatiner automatically  
+# restart docker container automatically  
 docker container run -it --rm --name web1_2 -p 5000 -e FLASK_APP=app.py -d --restart on-failure web1  
 
 # restart or rm only one at a time  
@@ -116,19 +116,58 @@ dcoker container stop web1_2
 sudo service docker restart  
 docker container ls  
 ##################################  
+## Volumes?? 
+
+Now lets see about some code chnages effects  
+docker container run -it -p 5000:5000 -e FLASK_APP=app.py --rm --name web1 web1  
+browser  
+Edit app.py file and chnage return value 0 to something else  
+
+browser  
+Ctrl+c  
+docker container run -it -p 5000:5000 -e FLASK_APP=app.py --rm --name web1 -e FLASK_DEBUG=1 web1  
+Edit app.py file and chnage return value 0 to something else  
+
+Ctrl+c  
+docker image build -t web1 .  
+docker container run -it -p 5000:5000 -e FLASK_APP=app.py --rm --name web1 -e FLASK_DEBUG=1 web1  
+Now Browser show changed items  
+########################################  
+# Adding Volumes tags  
+
+docker container run -it -p 5000:5000 -e FLASK_APP=app.py --rm --name web1 -e FLASK_DEBUG=1 -v $PWD:/app web1  
+
+we can inspcect this  
+open new terminal window  
+docker container inspcect web1  
+goto mounts section to check bind mount point  
+Goto Browser and check  
+
+#######################################  
+
+## if required chnage below  
+FROM python:2.7-alpine  
+      to  
+FROM python:2.7-slim  
+
+docker image build -t web1 .  
+#######################  
+# connecting to Running containers  
+docker container run -it -p 5000:5000 -e FLASK_APP=app.py --rm --name web1 -e FLASK_DEBUG=1 -v $PWD:/app web1  
+
+docker container exec -it web1 bash  
+
+###################################  
+# Linking containers with Docker networks  
+
+###################################
+# tag docker image  
+docker tag <CONT-ID> drahulgandhi/docker-40:flaskapp1  
+  
+docker login  
+
+docker push `<Docker-Username>/<Repo-Name>`:CONTTag  
 
 
-
-
-
-
-
-
-
- 
-
-
-
-
-
+docker cp `./webapp.war demo:/usr/local/tomcat/webapps`  
 
